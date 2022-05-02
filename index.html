@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Asset Tracking</title>
+    <style>
+        body
+        {
+            background-color: aqua;
+        }
+        .container{
+            font-family: sans-serif;
+        }
+        .h2
+        {
+            text-align: center;
+            font-size: 50px;
+            
+        }
+        #data
+        {
+            font-size: 20px;
+        }
+        #beacon
+        {
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="h2">Smart Asset Tracking</h2>
+        <hr>
+        <p id="error"></p>
+        <p id="beacon">Beacons Found !</p>
+        <p id="data"></p>
+        <script type ="text/javascript">
+            fetch('https://mqtttest5.blob.core.windows.net/mqtttest5/data.json')
+            .then(function(response)
+            {
+                return response.json();
+            })
+            .then(function(data)
+            {
+                for(i=0;i<data.length;i++)
+                {
+                    
+                    document.getElementById("data").innerHTML +=
+                    "RSSI = " + data[i].RSSI +  "&nbsp &nbsp &nbsp &nbsp &nbsp" + "MAC = " + data[i].MAC + "<br />";
+                }
+            })
+            .catch(function(err)
+            {
+                document.getElementById("error").innerHTML += "Error 404! \n\n No beacon found Near by";
+                console.log(err);
+            })
+        </script>
+    </div>
+</body>
+</html>
